@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model contractor {
+  id            Int     @id @default(autoincrement())
+  companyName   String  @db.VarChar(250)
+  email         String  @db.VarChar(120)
+  contactPerson String? @db.VarChar(250)
+  logoImage     String? @db.LongText
+  imgFormat     String? @db.VarChar(45)
+}
+
+model item {
+  id                Int     @id @default(autoincrement())
+  name              String  @db.VarChar(120)
+  description       String? @db.Text
+  avgPrice          Decimal @db.Decimal(10, 0)
+  image             String? @db.VarChar(250)
+  banner            String? @db.VarChar(250)
+  unitOfMeasurement String  @db.VarChar(4)
+  itemGroup         Int?
+}
+
+model itemgroup {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(120)
+}
+
+model measurement {
+  unit        String @id @unique(map: "Unit_UNIQUE") @db.VarChar(4)
+  description String @db.VarChar(120)
+}
